@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+    <title>agregame.py</title>
+    <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/><style>
+	.ui-widget-content, .ui-messages-info-detail{
+		font-size: 9px !important;
+	}
+	.ui-column-title{
+		font-size: 9px !important;
+		text-align: left;
+		font-weight: bold;
+	}	
+	.ui-button-text{
+		font-size: 9px !important;
+	}
+</style>
+</h:head>
+
+<h:body>
+<H1>Contactos</H1>
+<p:dataTable var="contacto" value="#{vistaBasica.contactos}">
+    <p:column headerText="ID">
+        <h:outputText value="#{contacto.id}" />
+    </p:column>
+ 
+    <p:column headerText="Nombre">
+        <h:outputText value="#{contacto.nombre}" />
+    </p:column>
+ 
+   <p:column headerText="Apellido">
+        <h:outputText value="#{contacto.apellido}" />
+    </p:column>
+    
+    <p:column headerText="Alias">
+        <h:outputText value="#{contacto.alias}" />
+    </p:column>
+    
+    <p:column headerText="Teléfono">
+        <h:outputText value="#{contacto.telefono}" />
+    </p:column>
+    
+    <p:column headerText="Email">
+        <h:outputText value="#{contacto.email}" />
+    </p:column>
+    
+    <p:column headerText="Dirección">
+        <h:outputText value="#{contacto.direccion}" />
+    </p:column>
+    
+    <p:column headerText="Fecha de Creación">
+        <h:outputText value="#{contacto.fechacreacion}" />
+    </p:column>
+    
+    <p:column headerText="Fecha de Modificación">
+        <h:outputText value="#{contacto.fechamodificacion}" />
+    </p:column>
+
+</p:dataTable>
+
+</h:body>
+
+</html>
