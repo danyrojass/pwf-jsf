@@ -37,17 +37,20 @@
 
 <h:form>
 		<h:outputLabel for="search" value="Ingrese texto a buscar: " style="font-weight:bold"/>
-		<p:inputText id="search" value="#{vistaBasica.search}" label="search" autocomplete="off"/>
-		<p:commandLink id="btnBuscar" value="BUSCAR" type="button" action="#{vistaBasica.filtrarContactos()}" 
+		<p:inputText id="search" value="#{vistaAcciones.search}" label="search" autocomplete="off"/>
+		<p:commandLink id="btnBuscar" value="BUSCAR" type="button" action="#{vistaAcciones.filtrarContactos()}" 
 		style="padding: .3em 1em;" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c"/>
 		
 </h:form>
 
 <p:separator style=" background-color:white;border-color:white;height:25px" />
 
-<p:commandButton value="AGREGAR" style="float:right;" actionListener="#{vistaAcciones.crearContacto()}" />
+<p:commandLink id="btnCrear" value="AGREGAR NUEVO CONTACTO" type="button" action="#{vistaAcciones.crearContacto()}" 
+		style="padding: .3em 1em;" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c"/>
 
-<p:dataTable id="tablaContactos" var="contacto" value="#{vistaBasica.contactos}" paginator="true" rows="10">
+<p:separator style=" background-color:white;border-color:white;height:25px" />
+
+<p:dataTable id="tablaContactos" var="contacto" value="#{vistaAcciones.contactos}" paginator="true" rows="10">
     
     <p:column headerText="ID">
         <h:outputText value="#{contacto.id}" />
@@ -96,7 +99,7 @@
 				<f:setPropertyActionListener value="#{contacto}" target="#{vistaAcciones.contactoSeleccionado}" />
 			</p:commandLink>
 			
-			<p:commandLink id="btnBorrar" value="BORRAR" type="button" action="#{vistaAcciones.borrarContacto()}"
+			<p:commandLink id="btnBorrar" value="BORRAR" type="button" action="#{vistaAcciones.borrarContacto()}" update="tablaContactos"
 			style="padding: .3em 1em;" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c">
 				<f:setPropertyActionListener value="#{contacto}" target="#{vistaAcciones.contactoSeleccionado}" />
 				<p:confirm header="Confirmación" message="¿Está seguro de elminar el contacto?" icon="ui-icon-alert" />

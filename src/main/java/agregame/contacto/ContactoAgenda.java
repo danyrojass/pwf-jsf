@@ -5,6 +5,10 @@ import java.util.Date;
 
 public class ContactoAgenda implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6350905202631853050L;
 	private Integer id;
 	private String nombre;
 	private String apellido;
@@ -81,5 +85,10 @@ public class ContactoAgenda implements Serializable{
 		this.fechamodificacion = fechamodificacion;
 	}
 	
-	
+	public String toPost() {
+		return "{\"nombre\":\"" + nombre + "\",\"apellido\":\"" + apellido
+				+ "\",\"alias\":\"" + alias + "\",\"telefono\":\"" + telefono
+				+ "\",\"email\":\"" + email + "\",\"direccion\":\"" + direccion
+				+ "\"}";
+	}
 }

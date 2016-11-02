@@ -1,14 +1,12 @@
 package agregame.servicios;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-
-import com.sun.jersey.api.representation.Form;
 
 import agregame.contacto.ContactoAgenda;
 
@@ -22,12 +20,25 @@ public class VistaAcciones implements Serializable{
 	private static final long serialVersionUID = -694713719062040535L;
 	public ContactoAgenda contacto;
 	public ContactoAgenda contactoSeleccionado;
-	
+	private List<ContactoAgenda> contactos;
+	String search;
+
 	@ManagedProperty("#{servicioContactos}")
 	private ServicioContactos servicio;
 	
+	@PostConstruct
+	public void init() {
+		this.search = "";
+		this.setContactos(servicio.getContactos(null));        
+	}
+	
 	private void newContacto(){
 		contacto = new ContactoAgenda();
+	}
+	
+	public void filtrarContactos(){
+		System.out.println(this.search + this.search);
+		//contactos = servicio.getContactos(getFiltro(); 
 	}
 	
 	public String verContacto(){
@@ -42,21 +53,17 @@ public class VistaAcciones implements Serializable{
 		return "views/editar.xhtml";
 	}
 	
+
 	public String modificarContacto(){
-		Form form = new Form();
-	    form.add("nombre", getContacto().getNombre());
-	    form.add("apellido", getContacto().getApellido());
-	    form.add("alias", getContacto().getAlias());
-	    form.add("email", getContacto().getEmail());
-	    form.add("direccion", getContacto().getDireccion());
 	    
-		servicio.putContacto(getContactoSeleccionado().getId(), form);
+		servicio.putContacto(getContacto());
 		
 		return "../index.xhtml";
 	}
 	
 	public void borrarContacto(){
 		servicio.deleteContacto(getContactoSeleccionado().getId());
+		setContactos(servicio.getContactos(null));
 	}
 	
 	public String crearContacto(){
@@ -65,14 +72,7 @@ public class VistaAcciones implements Serializable{
 	}
 	
 	public String nuevoContacto(){
-		Form form = new Form();
-	    form.add("nombre", getContacto().getNombre());
-	    form.add("apellido", getContacto().getApellido());
-	    form.add("alias", getContacto().getAlias());
-	    form.add("telefono", getContacto().getTelefono());
-	    form.add("email", getContacto().getEmail());
-	    form.add("direccion", getContacto().getDireccion());
-	    servicio.postContacto(form);
+	    servicio.postContacto(getContacto());
 		
 		return "../index.xhtml";
 	}
@@ -103,5 +103,21 @@ public class VistaAcciones implements Serializable{
 
 	public void setContactoSeleccionado(ContactoAgenda contactoSeleccionado) {
 		this.contactoSeleccionado = contactoSeleccionado;
+	}
+
+	public List<ContactoAgenda> getContactos() {
+		return contactos;
+	}
+
+	public void setContactos(List<ContactoAgenda> contactos) {
+		this.contactos = contactos;
+	}
+	
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
 	}
 }
