@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
+import com.sun.jersey.api.representation.Form;
+
 import agregame.contacto.ContactoAgenda;
 
 @ManagedBean(name="vistaAcciones")
@@ -24,14 +26,55 @@ public class VistaAcciones implements Serializable{
 	@ManagedProperty("#{servicioContactos}")
 	private ServicioContactos servicio;
 	
-	@PostConstruct
-	public void init() {
-		this.contacto = getContactoSeleccionado();       
+	private void newContacto(){
+		contacto = new ContactoAgenda();
 	}
 	
 	public String verContacto(){
+		newContacto();
 		setContacto(servicio.getContacto(getContactoSeleccionado().getId()));
 		return "views/ver.xhtml";
+	}
+	
+	public String editarContacto(){
+		newContacto();
+		setContacto(servicio.getContacto(getContactoSeleccionado().getId()));
+		return "views/editar.xhtml";
+	}
+	
+	public String modificarContacto(){
+		Form form = new Form();
+	    form.add("nombre", getContacto().getNombre());
+	    form.add("apellido", getContacto().getApellido());
+	    form.add("alias", getContacto().getAlias());
+	    form.add("email", getContacto().getEmail());
+	    form.add("direccion", getContacto().getDireccion());
+	    
+		servicio.putContacto(getContactoSeleccionado().getId(), form);
+		
+		return "../index.xhtml";
+	}
+	
+	public void borrarContacto(){
+		servicio.deleteContacto(getContactoSeleccionado().getId());
+	}
+	
+	public String crearContacto(){
+		newContacto();
+		return "views/crear.xhtml";
+	}
+	
+	public String nuevoContacto(){
+		Form form = new Form();
+	    form.add("nombre", getContacto().getNombre());
+	    form.add("apellido", getContacto().getApellido());
+	    form.add("alias", getContacto().getAlias());
+	    form.add("telefono", getContacto().getTelefono());
+	    form.add("email", getContacto().getEmail());
+	    form.add("direccion", getContacto().getDireccion());
+	    servicio.postContacto(form);
+		
+		return "../index.xhtml";
 	}
 
 	public String volver(){

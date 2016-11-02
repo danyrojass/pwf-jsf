@@ -45,6 +45,8 @@
 
 <p:separator style=" background-color:white;border-color:white;height:25px" />
 
+<p:commandButton value="AGREGAR" style="float:right;" actionListener="#{vistaAcciones.crearContacto()}" />
+
 <p:dataTable id="tablaContactos" var="contacto" value="#{vistaBasica.contactos}" paginator="true" rows="10">
     
     <p:column headerText="ID">
@@ -88,6 +90,22 @@
 			style="padding: .3em 1em;" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c">
 				<f:setPropertyActionListener value="#{contacto}" target="#{vistaAcciones.contactoSeleccionado}" />
 			</p:commandLink>
+			
+			<p:commandLink id="btnEditar" value="EDITAR" type="button" action="#{vistaAcciones.editarContacto()}"
+			style="padding: .3em 1em;" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c">
+				<f:setPropertyActionListener value="#{contacto}" target="#{vistaAcciones.contactoSeleccionado}" />
+			</p:commandLink>
+			
+			<p:commandLink id="btnBorrar" value="BORRAR" type="button" action="#{vistaAcciones.borrarContacto()}"
+			style="padding: .3em 1em;" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c">
+				<f:setPropertyActionListener value="#{contacto}" target="#{vistaAcciones.contactoSeleccionado}" />
+				<p:confirm header="Confirmación" message="¿Está seguro de elminar el contacto?" icon="ui-icon-alert" />
+			</p:commandLink>
+ 
+    		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        		<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    		</p:confirmDialog>
 			
 	</p:column>
 </p:dataTable>

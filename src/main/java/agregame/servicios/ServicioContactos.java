@@ -22,9 +22,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.representation.Form;
 
 
 @ManagedBean(name = "servicioContactos")
@@ -88,6 +90,21 @@ public class ServicioContactos implements Serializable{
         contacto = gson.fromJson(rootObejct, contactoAgendaType);
          
         return contacto;
+    }
+    
+    public void putContacto(Integer id, Form form) {
+    	@SuppressWarnings("unused")
+		ClientResponse clientResponse = restWS.path(AGENDAID+id.toString()).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
+    }
+    
+    public void deleteContacto(Integer id) {
+    	@SuppressWarnings("unused")
+		ClientResponse clientResponse = restWS.path(AGENDAID+id.toString()).delete(ClientResponse.class);
+    }
+    
+    public void postContacto(Form form) {
+    	@SuppressWarnings("unused")
+		ClientResponse clientResponse = restWS.path(AGENDA).type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, form);
     }
      
 	private static URI getBaseURI() {

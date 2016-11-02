@@ -35,28 +35,30 @@
 <h1>Contacto</h1>
 <h:form>
     <h:panelGrid columns="2" cellpadding="5">
-        <p:outputLabel for="id" value="Id: " />
-        <p:inputText id="id" value="#{vistaAcciones.contacto.id}" disabled="true"/>
- 
+
         <p:outputLabel for="nombre" value="Nombre: " />
-        <p:inputText id="nombre" value="#{vistaAcciones.contacto.nombre}" disabled="true"/>
+        <p:inputText id="nombre" value="#{vistaAcciones.contacto.nombre}" required="true"/>
         
         <p:outputLabel for="apellido" value="Apellido: " />
-        <p:inputText id="apellido" value="#{vistaAcciones.contacto.apellido}" disabled="true"/>
+        <p:inputText id="apellido" value="#{vistaAcciones.contacto.apellido}" required="true"/>
         
         <p:outputLabel for="alias" value="Alias: " />
-        <p:inputText id="alias" value="#{vistaAcciones.contacto.alias}" disabled="true"/>
+        <p:inputText id="alias" value="#{vistaAcciones.contacto.alias}"/>
         
         <p:outputLabel for="telefono" value="Teléfono: " />
-        <p:inputText id="telefono" value="#{vistaAcciones.contacto.telefono}" disabled="true"/>
+        <p:inputText id="telefono" value="#{vistaAcciones.contacto.telefono}" required="true"/>
         
         <p:outputLabel for="email" value="Email: " />
-        <p:inputText id="email" value="#{vistaAcciones.contacto.email}" disabled="true"/>
+        <p:inputText id="email" value="#{vistaAcciones.contacto.email}" required="true">
+        	<f:validateRegex
+				pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		</p:inputText>
         
         <p:outputLabel for="direccion" value="Dirección: " />
-        <p:inputText id="direccion" value="#{vistaAcciones.contacto.direccion}" disabled="true"/>
+        <p:inputText id="direccion" value="#{vistaAcciones.contacto.direccion}"/>
         
 		<p:commandButton id="volver" value="VOLVER" action="#{vistaAcciones.volver()}"/>
+		<p:commandButton id="crear" value="CREAR" action="#{vistaAcciones.nuevoContacto()}"/>
 		
     </h:panelGrid>
 
