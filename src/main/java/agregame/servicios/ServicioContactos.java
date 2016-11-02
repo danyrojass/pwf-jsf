@@ -1,5 +1,6 @@
 package agregame.servicios;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import agregame.deserializador.DateDeserializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -29,44 +29,67 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 @ManagedBean(name = "servicioContactos")
 @ApplicationScoped
-public class ServicioContactos {
+public class ServicioContactos implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6784412074499110064L;
 	private static final String URLBASE = "https://desa03.konecta.com.py/pwf";
 	private static final String REST = "rest";
 	private static final String AGENDA = "agenda";
+	private static final String AGENDAID = "agenda/";
 	
-	public class GsonFromJson{
-		public int total;
-		public List<ContactoAgenda> lista;
-		
-		public GsonFromJson(){
-			this.total=0;
-			this.lista= new ArrayList<ContactoAgenda>();
-		}
+	public ArrayList<ContactoAgenda> contactos; 
+	
+	transient ClientConfig config = new DefaultClientConfig();
+	transient Client client = Client.create(config);
+	transient WebResource service = client.resource(getBaseURI());
+	transient WebResource restWS  = service.path(REST);
+	
+	private void init(){
+		config = new DefaultClientConfig();
+		client = Client.create(config);
+		service = client.resource(getBaseURI());
+		restWS  = service.path(REST);
 	}
-	
-	ClientConfig config = new DefaultClientConfig();
-	Client client = Client.create(config);
-	WebResource service = client.resource(getBaseURI());
-	WebResource restWS  = service.path(REST);
-	
      
-    public List<ContactoAgenda> getContactos() {
+    public List<ContactoAgenda> getContactos(String filtro) {
 
-    	List<ContactoAgenda> contactos = new ArrayList<ContactoAgenda>();
+    	contactos = new ArrayList<ContactoAgenda>();
+    	String json;
     	Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateDeserializer()).create();
     	
-        String Json = restWS.path(AGENDA).accept(MediaType.APPLICATION_JSON).get(String.class);
+        if(filtro==null){
+        	json = restWS.path(AGENDA).accept(MediaType.APPLICATION_JSON).get(String.class);
+        }else {
+        	json = restWS.path(AGENDA+"filtro="+filtro).accept(MediaType.APPLICATION_JSON).get(String.class);
+        }
         JsonParser parser = new JsonParser();
-        JsonObject rootObejct = parser.parse(Json).getAsJsonObject();
+        JsonObject rootObejct = parser.parse(json).getAsJsonObject();
         JsonElement contactosJson = rootObejct.get("lista");
-        Type personaListaType = new TypeToken<List<ContactoAgenda>>() {}.getType();
-        contactos = gson.fromJson(contactosJson, personaListaType);
+        Type contactoAgendaListaType = new TypeToken<List<ContactoAgenda>>() {}.getType();
+        contactos = gson.fromJson(contactosJson, contactoAgendaListaType);
  
         return contactos;
     }
-     
+    
+    public ContactoAgenda getContacto(Integer id) {
+    	init();
+    	ContactoAgenda contacto = new ContactoAgenda();
+    	String json;
+    	Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateDeserializer()).create();
+    	
+    	json = restWS.path(AGENDAID+id.toString()).accept(MediaType.APPLICATION_JSON).get(String.class);
 
+        JsonParser parser = new JsonParser();
+        JsonObject rootObejct = parser.parse(json).getAsJsonObject();
+        Type contactoAgendaType = new TypeToken<ContactoAgenda>() {}.getType();
+        contacto = gson.fromJson(rootObejct, contactoAgendaType);
+         
+        return contacto;
+    }
+     
 	private static URI getBaseURI() {
 		return UriBuilder.fromUri(URLBASE).build();
 	}

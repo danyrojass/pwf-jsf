@@ -11,7 +11,8 @@
 
 <h:head>
     <title>agregame.py</title>
-    <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/><style>
+    <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+<style>
 	.ui-widget-content, .ui-messages-info-detail{
 		font-size: 9px !important;
 	}
@@ -27,8 +28,25 @@
 </h:head>
 
 <h:body>
-<H1>Contactos</H1>
-<p:dataTable var="contacto" value="#{vistaBasica.contactos}">
+<p:panel >
+	<f:facet name="header" >
+    	agregame.py
+    </f:facet>
+</p:panel>
+<h1>Contactos</h1>
+
+<h:form>
+		<h:outputLabel for="search" value="Ingrese texto a buscar: " style="font-weight:bold"/>
+		<p:inputText id="search" value="#{vistaBasica.search}" label="search" autocomplete="off"/>
+		<p:commandLink id="btnBuscar" value="BUSCAR" type="button" action="#{vistaBasica.filtrarContactos()}" 
+		style="padding: .3em 1em;" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c"/>
+		
+</h:form>
+
+<p:separator style=" background-color:white;border-color:white;height:25px" />
+
+<p:dataTable id="tablaContactos" var="contacto" value="#{vistaBasica.contactos}" paginator="true" rows="10">
+    
     <p:column headerText="ID">
         <h:outputText value="#{contacto.id}" />
     </p:column>
@@ -65,6 +83,13 @@
         <h:outputText value="#{contacto.fechamodificacion}" />
     </p:column>
 
+	<p:column headerText="Acciones">
+			<p:commandLink id="btnVer" value="VER" type="button" action="#{vistaAcciones.verContacto()}"
+			style="padding: .3em 1em;" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c">
+				<f:setPropertyActionListener value="#{contacto}" target="#{vistaAcciones.contactoSeleccionado}" />
+			</p:commandLink>
+			
+	</p:column>
 </p:dataTable>
 
 </h:body>

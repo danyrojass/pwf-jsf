@@ -1,50 +1,64 @@
 package agregame.servicios;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.Serializable;
 import java.util.List;
-import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 import agregame.contacto.ContactoAgenda;
 
 @ManagedBean(name="vistaBasica")
 @ViewScoped
-public class VistaBasica {
+public class VistaBasica implements Serializable{
 
-	 private List<ContactoAgenda> contactos;
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	String search;
+
+	private List<ContactoAgenda> contactos;
      
-	    @ManagedProperty("#{servicioContactos}")
-	    private ServicioContactos servicio;
-	 
-	    @PostConstruct
-	    public void init() {
-	        contactos = servicio.getContactos();        
-	    }
+	@ManagedProperty("#{servicioContactos}")
+	private ServicioContactos servicio;
+	
+	@PostConstruct
+	public void init() {
+		this.search = "";
+		this.contactos = servicio.getContactos(null);        
+	}
+	
+	public void filtrarContactos(){
+		System.out.println(this.search + this.search);
+		//contactos = servicio.getContactos(getFiltro(); 
+	}
 	     
-	    public List<ContactoAgenda> getContactos() {
-	        return contactos;
-	    }
+	public List<ContactoAgenda> getContactos() {
+		return contactos;
+	}
 	 
-	    public void setServicio(ServicioContactos servicio) {
-	        this.servicio = servicio;
-	    }
-	    
-	    public String formatDate(String date) throws ParseException
-		{	if (date!=""){
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-				sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-				Date temp= sdf.parse(date);
-				sdf=new SimpleDateFormat("dd-MM-YYYY hh:mm");
-				String dateString=sdf.format(temp);
-				return dateString ;
-			}
-			else return date;
-		}
-	    
+	public void setServicio(ServicioContactos servicio) {
+		this.servicio = servicio;
+	}
+
+	public ServicioContactos getServicio() {
+		return servicio;
+	}
+
+	public void setContactos(List<ContactoAgenda> contactos) {
+		this.contactos = contactos;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
 }

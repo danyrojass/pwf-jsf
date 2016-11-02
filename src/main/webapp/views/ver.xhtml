@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+   <title>agregame.py</title>
+   <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+<style>
+	.ui-widget-content, .ui-messages-info-detail{
+		font-size: 9px !important;
+	}
+	.ui-column-title{
+		font-size: 9px !important;
+		text-align: left;
+		font-weight: bold;
+	}	
+	.ui-button-text{
+		font-size: 9px !important;
+	}
+</style>
+</h:head>
+
+<h:body>
+<p:panel >
+	<f:facet name="header" >
+    	agregame.py
+    </f:facet>
+</p:panel>
+<h1>Contacto</h1>
+<h:form>
+    <h:panelGrid columns="2" cellpadding="5">
+        <p:outputLabel for="id" value="Id: " />
+        <p:inputText id="id" value="#{vistaAcciones.contactoSeleccionado.id}" disabled="true"/>
+ 
+        <p:outputLabel for="nombre" value="Nombre: " />
+        <p:inputText id="nombre" value="#{vistaAcciones.contactoSeleccionado.nombre}" disabled="true"/>
+        
+        <p:outputLabel for="apellido" value="Apellido: " />
+        <p:inputText id="apellido" value="#{vistaAcciones.contactoSeleccionado.apellido}" disabled="true"/>
+        
+        <p:outputLabel for="alias" value="Alias: " />
+        <p:inputText id="alias" value="#{vistaAcciones.contactoSeleccionado.alias}" disabled="true"/>
+        
+        <p:outputLabel for="telefono" value="Teléfono: " />
+        <p:inputText id="telefono" value="#{vistaAcciones.contactoSeleccionado.telefono}" disabled="true"/>
+        
+        <p:outputLabel for="email" value="Email: " />
+        <p:inputText id="email" value="#{vistaAcciones.contactoSeleccionado.email}" disabled="true"/>
+        
+        <p:outputLabel for="direccion" value="Dirección: " />
+        <p:inputText id="direccion" value="#{vistaAcciones.contactoSeleccionado.direccion}" disabled="true"/>
+        
+		<p:commandButton id="volver" value="VOLVER" action="#{vistaAcciones.volver()}"/>
+		
+    </h:panelGrid>
+
+</h:form>
+</h:body>
+
+</html>
