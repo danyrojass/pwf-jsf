@@ -10,6 +10,7 @@ import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 
 import agregame.contacto.ContactoAgenda;
@@ -26,6 +27,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 
 @ManagedBean(name = "servicioContactos")
@@ -64,7 +66,9 @@ public class ServicioContactos implements Serializable{
         if(filtro==null){
         	json = restWS.path(AGENDA).accept(MediaType.APPLICATION_JSON).get(String.class);
         }else {
-        	json = restWS.path(AGENDA+"filtro="+filtro).accept(MediaType.APPLICATION_JSON).get(String.class);
+			MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
+        	queryParams.add("filtro", filtro);
+        	json = restWS.path(AGENDA).queryParams(queryParams).accept(MediaType.APPLICATION_JSON).get(String.class);
         }
         JsonParser parser = new JsonParser();
         JsonObject rootObejct = parser.parse(json).getAsJsonObject();

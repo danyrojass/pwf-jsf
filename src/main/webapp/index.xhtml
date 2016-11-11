@@ -38,7 +38,7 @@
 <h:form>
 		<h:outputLabel for="search" value="Ingrese texto a buscar: " style="font-weight:bold"/>
 		<p:inputText id="search" value="#{vistaAcciones.search}" label="search" autocomplete="off"/>
-		<p:commandLink id="btnBuscar" value="BUSCAR" type="button" action="#{vistaAcciones.filtrarContactos()}" 
+		<p:commandLink id="btnBuscar" value="BUSCAR" type="button" action="#{vistaAcciones.filtrarContactos()}" update="tablaContactos"
 		style="padding: .3em 1em;" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c"/>
 		
 </h:form>
@@ -52,7 +52,7 @@
 
 <p:dataTable id="tablaContactos" var="contacto" value="#{vistaAcciones.contactos}" paginator="true" rows="10">
     
-    <p:column headerText="ID">
+    <p:column style="width:5px" headerText="ID">
         <h:outputText value="#{contacto.id}" />
     </p:column>
  

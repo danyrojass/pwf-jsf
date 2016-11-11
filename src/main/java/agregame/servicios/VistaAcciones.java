@@ -37,8 +37,7 @@ public class VistaAcciones implements Serializable{
 	}
 	
 	public void filtrarContactos(){
-		System.out.println(this.search + this.search);
-		//contactos = servicio.getContactos(getFiltro(); 
+		contactos = servicio.getContactos(getSearch()); 
 	}
 	
 	public String verContacto(){
@@ -57,7 +56,7 @@ public class VistaAcciones implements Serializable{
 	public String modificarContacto(){
 	    
 		servicio.putContacto(getContacto());
-		
+		init();
 		return "../index.xhtml";
 	}
 	
@@ -73,7 +72,7 @@ public class VistaAcciones implements Serializable{
 	
 	public String nuevoContacto(){
 	    servicio.postContacto(getContacto());
-		
+		init();
 		return "../index.xhtml";
 	}
 
